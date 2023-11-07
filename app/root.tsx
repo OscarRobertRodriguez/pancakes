@@ -1,5 +1,8 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import type { LinksFunction } from "@remix-run/node";
+import tailwindStylesheetUrl from "./styles/tailwind.css";
+import fontStylesheetUrl from "./styles/font.css";
+import faviconAssetUrl from "./assets/favicon.svg"; 
 import {
   Links,
   LiveReload,
@@ -9,9 +12,14 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-];
+export const links: LinksFunction = () => {
+  return [
+    {rel: "icon" ,type: 'image/svg+xml', href: faviconAssetUrl},
+    {rel: "stylesheet", href: fontStylesheetUrl},
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    cssBundleHref ? { rel: "stylesheet", href: cssBundleHref } : null,
+  ].filter(Boolean);
+};
 
 export default function App() {
   return (
